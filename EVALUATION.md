@@ -65,9 +65,9 @@
 
 | Путь | Instruction chars | Снижение за 1 000 шагов | Точка окупаемости |
 |---|---:|---:|---:|
-| L1: `SKILL.md` | 1 749 | 17,48x | ~57 шаг |
-| L2: + `long-horizon.md` | 5 392 | 6,64x | ~150 шаг |
-| L3: + `persistent-state.md` | 11 060 | 3,38x | ~295 шаг |
+| L1: `SKILL.md` | 1 916 | 16,26x | ~61 шаг |
+| L2: + `long-horizon.md` | 5 559 | 6,46x | ~154 шаг |
+| L3: + `persistent-state.md` | 11 370 | 3,29x | ~303 шаг |
 
 Python guard не включён в instruction-char метрику: он выполняется как детерминированный скрипт, тогда как в model context загружаются только необходимые Markdown-инструкции. Цена L3 выше, но она возникает только там, где потеря или гонка state существенно дороже дополнительного контекста.
 
@@ -81,3 +81,9 @@ Python guard не включён в instruction-char метрику: он вып
 - Внешние API/файловые эффекты не откатываются вместе с state и требуют read-only reconciliation при неопределённости.
 
 Основа подхода: [SKILL.state: Scalable Long-Horizon Agent Skills](https://arxiv.org/html/2608.26263v2). Формат skill, optional scripts и progressive disclosure сверены с [официальной документацией OpenAI](https://learn.chatgpt.com/docs/build-skills).
+
+## Claude Code compatibility
+
+Корень репозитория также проверяется как Claude Code Agent Skill: `SKILL.md` содержит discoverable frontmatter, supporting resources разрешаются относительно skill, `${CLAUDE_SKILL_DIR}` доступен для bundled guard, а глобальный `CLAUDE.md`-snippet задаёт first-turn project routing. Portable suite добавляет 5/5 статических compatibility-проверок.
+
+Guard остаётся тем же stdlib runtime и проходит общий Windows/Linux CI. Локальный executable Claude Code во время проверки отсутствовал, поэтому подтверждены файловый формат, discovery contract и runtime, но не проведён интерактивный model-behavior A/B. Формат сверен с [Claude Code skills](https://code.claude.com/docs/en/skills) и [CLAUDE.md memory](https://code.claude.com/docs/en/memory).

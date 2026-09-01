@@ -8,7 +8,7 @@ permissions:
   contents: read
 
 jobs:
-  state-guard:
+  skill:
     strategy:
       fail-fast: false
       matrix:

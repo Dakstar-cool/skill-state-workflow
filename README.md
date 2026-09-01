@@ -1,8 +1,10 @@
-# SKILL.state Workflow for Codex
+# SKILL.state Workflow for Codex and Claude Code
 
-A personal Codex skill for bounded, revisioned execution state, with a deterministic persistent JSON guard for recovery, handoff, compaction, waits, and parallel work.
+A cross-compatible Agent Skill for bounded, revisioned execution state, with a deterministic persistent JSON guard for recovery, handoff, compaction, waits, and parallel work.
 
-The design is inspired by [SKILL.state: Scalable Long-Horizon Agent Skills](https://arxiv.org/abs/2608.26263). This repository is an independent implementation, not an official OpenAI project.
+The design is inspired by [SKILL.state: Scalable Long-Horizon Agent Skills](https://arxiv.org/abs/2608.26263). This repository is an independent implementation, not an official OpenAI or Anthropic project.
+
+The root layout follows the shared `SKILL.md` Agent Skills format. Codex and Claude Code use the same instructions, references, guard, and tests; only their discovery metadata and always-on project instruction files differ.
 
 ## Behavior
 
@@ -23,10 +25,15 @@ Ordinary one-shot Projectless chats remain outside the workflow.
 - `references/persistent-state.md` — persistent schema and CLI contract.
 - `scripts/state_guard.py` — standard-library-only JSON guard.
 - `agents/openai.yaml` — Codex UI and implicit-invocation metadata.
+- `docs/claude-code.md` — Claude Code installation and activation guide.
+- `examples/global-CLAUDE-snippet.md` — first-turn activation rule for Claude Code.
 - `tests/test_state_guard.py` — deterministic regression suite.
+- `tests/test_claude_compat.py` — Claude Code layout and discovery checks.
 - `EVALUATION.md` — routing, reliability, and context-scaling results.
 
 ## Install
+
+### Codex
 
 Clone the repository into the personal Codex skills directory:
 
@@ -37,6 +44,18 @@ git clone https://github.com/Dakstar-cool/skill-state-workflow.git ~/.codex/skil
 If that destination already exists, preserve or move it before cloning. Do not overwrite personal changes blindly.
 
 To activate the workflow from the first message of every project task, merge the rule in [`examples/global-AGENTS-snippet.md`](examples/global-AGENTS-snippet.md) into `~/.codex/AGENTS.md`.
+
+### Claude Code
+
+Clone the same repository into the personal Claude Code skills directory:
+
+```text
+git clone https://github.com/Dakstar-cool/skill-state-workflow.git ~/.claude/skills/skill-state-workflow
+```
+
+On Windows, `~/.claude` resolves to `%USERPROFILE%\.claude`. Merge [`examples/global-CLAUDE-snippet.md`](examples/global-CLAUDE-snippet.md) into `~/.claude/CLAUDE.md` to request the skill from the first turn of every project session. Invoke it directly with `/skill-state-workflow`, or let Claude select it from the frontmatter description.
+
+Claude Code ignores the Codex-only `agents/openai.yaml`; it does not affect skill discovery. See the complete [Claude Code guide](docs/claude-code.md).
 
 ## Persistent guard
 
@@ -76,4 +95,4 @@ The persistent layer assumes cooperating writers and a trusted local filesystem.
 
 ## Evaluation
 
-The current evaluation reports 52/52 workflow invariants, 26/26 guard regressions, 22/22 unambiguous routing scenarios, and 10/10 adversarial two-writer races. Full methodology and limitations are in [`EVALUATION.md`](EVALUATION.md).
+The current evaluation reports 52/52 workflow invariants, 26/26 guard regressions, 5/5 Claude compatibility checks, 22/22 unambiguous routing scenarios, and 10/10 adversarial two-writer races. Full methodology and limitations are in [`EVALUATION.md`](EVALUATION.md).

@@ -52,7 +52,7 @@ Statuses are `unknown`, `passed`, or `failed`. A passed criterion requires:
 
 ## Commands
 
-Use the bundled Python runtime when the system Python is missing. In these examples, `<python>` is the chosen interpreter and `<skill>` is this skill directory.
+Use the bundled Python runtime when the system Python is missing. In these examples, `<python>` is the chosen interpreter and `<skill>` is this skill directory. Claude Code resolves `<skill>` through `${CLAUDE_SKILL_DIR}` from the invoked `SKILL.md`; Codex resolves it from the installed skill location.
 
 Create the scratch directory first (`New-Item -ItemType Directory -Force .codex-state` in PowerShell or `install -d -m 700 .codex-state` on POSIX). The guard refuses missing parent directories instead of guessing where state belongs. State, lock, and temporary files are restricted by the guard; protect user-created patch files with the same workspace access policy.
 
