@@ -1,0 +1,7 @@
+interface:
+  display_name: "SKILL.state Workflow"
+  short_description: "Bounded state for project and resumable tasks"
+  default_prompt: "Use $skill-state-workflow from the first turn to execute this project or resumable task with bounded structured state."
+
+policy:
+  allow_implicit_invocation: true
